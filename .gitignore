@@ -1,38 +1,30 @@
-# Large model files
 *.h5
 *.pkl
 *.pth
 *.onnx
 
-# Dataset folder (too large)
 dataset/
 data/
 
-# Python cache
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 
-# Virtual environment
 venv/
 env/
 ENV/
 
-# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# OS
 .DS_Store
 Thumbs.db
 
-# Jupyter
 .ipynb_checkpoints/
 *.ipynb
 
-# Tensorflow/Keras
 .keras/
 *.pb
