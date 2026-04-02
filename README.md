@@ -1,122 +1,202 @@
-<<<<<<< HEAD
-# Chest X-Ray Pneumonia Classification Using CNN
+# 🩺 Chest X-Ray Pneumonia Classification using CNN
 
-## Project Overview
-This project implements a Convolutional Neural Network (CNN) to classify chest X-ray images as either **Normal** or **Pneumonia**. The model is built using TensorFlow/Keras and trained on a medical imaging dataset with data augmentation techniques to improve generalization.
+## 📌 Overview
 
-## Dataset
-- **Structure**: Organized into three sets (train, validation, test)
-- **Classes**: 
-  - NORMAL: Healthy X-ray images
-  - PNEUMONIA: X-ray images showing pneumonia
-- **Image Resolution**: 150×150 pixels (RGB)
-- **Directory Layout**:
-  ```
-  dataset/
-  ├── train/
-  │   ├── NORMAL/
-  │   └── PNEUMONIA/
-  ├── val/
-  │   ├── NORMAL/
-  │   └── PNEUMONIA/
-  └── test/
+This project focuses on developing a **Convolutional Neural Network (CNN)** model to automatically classify chest X-ray images into two categories:
+
+* ✅ **NORMAL**
+* ⚠️ **PNEUMONIA**
+
+The dataset consists of **5,863 pediatric chest X-ray images**, collected from routine clinical care. The goal is to assist in medical diagnosis by building an intelligent image classification system.
+
+---
+
+## 📂 Dataset Description
+
+The dataset is organized into three main folders:
+
+```
+dataset/
+ ├── train/
+ │    ├── NORMAL/
+ │    └── PNEUMONIA/
+ ├── val/
+ │    ├── NORMAL/
+ │    └── PNEUMONIA/
+ └── test/
       ├── NORMAL/
       └── PNEUMONIA/
-  ```
-
-## Model Architecture
-
-### CNN Layers
-```
-Input (150, 150, 3)
-  ↓
-Conv2D (32 filters, 3×3, ReLU) → MaxPooling2D (2×2)
-  ↓
-Conv2D (64 filters, 3×3, ReLU) → MaxPooling2D (2×2)
-  ↓
-Conv2D (128 filters, 3×3, ReLU) → MaxPooling2D (2×2)
-  ↓
-Flatten
-  ↓
-Dense (128 units, ReLU) → Dropout (0.5)
-  ↓
-Dense (1 unit, Sigmoid) [Binary Classification Output]
 ```
 
-### Key Specifications
-- **Total Convolutional Layers**: 3
-- **Filters**: 32 → 64 → 128
-- **Activation Function**: ReLU (hidden layers), Sigmoid (output)
-- **Optimizer**: Adam
-- **Loss Function**: Binary Crossentropy
-- **Regularization**: Dropout (0.5)
-- **Training Epochs**: 5
-- **Batch Size**: 16
+* **Train set** → Used to train the model
+* **Validation set** → Used to tune the model
+* **Test set** → Used to evaluate final performance
 
-## Data Augmentation
-To improve model robustness and reduce overfitting:
-- **Rescaling**: 1/255 normalization
-- **Zoom Range**: 0.2
-- **Shear Range**: 0.2
-- **Horizontal Flip**: Enabled
 
-## Results
-The model produces:
-- **Training Accuracy Plot**: Shows accuracy improvement over epochs
-- **Validation Accuracy Plot**: Monitors generalization performance
-- **Test Accuracy**: Final evaluation on unseen test data
-- **Saved Model**: `pneumonia_cnn_model.h5` in H5 format
+---
 
-## Requirements
+## ⚙️ Methodology
+
+### 🔹 1. Data Preprocessing
+
+* All images resized to **150 × 150 pixels**
+* Pixel values normalized (**rescale = 1/255**)
+* Data augmentation applied to training data:
+
+  * Zoom transformation
+  * Shear transformation
+  * Horizontal flipping
+
+👉 Purpose: Improve generalization and prevent overfitting
+
+---
+
+### 🔹 2. Model Architecture (CNN)
+
+The CNN model is built using multiple layers:
+
+1. **Conv2D (32 filters, 3×3) + ReLU**
+2. **MaxPooling (2×2)**
+3. **Conv2D (64 filters, 3×3) + ReLU**
+4. **MaxPooling (2×2)**
+5. **Conv2D (128 filters, 3×3) + ReLU**
+6. **MaxPooling (2×2)**
+7. **Flatten Layer**
+8. **Dense Layer (128 neurons, ReLU)**
+9. **Dropout Layer (0.5)** → Prevent overfitting
+10. **Output Layer (Sigmoid)** → Binary classification
+
+---
+
+### 🔹 3. Training Configuration
+
+* Optimizer: **Adam**
+* Loss Function: **Binary Crossentropy**
+* Batch Size: **16**
+* Epochs: **5**
+
+---
+
+## 📊 Results & Analysis
+
+### 📈 Accuracy Analysis
+
+* Training accuracy increased from **~86% → ~93%**
+* Validation accuracy fluctuated between **~68% → ~81%**
+
+👉 Interpretation:
+
+* Model is learning well from training data
+* Performance on unseen data is unstable
+
+---
+
+### 📉 Loss Analysis
+
+* Training loss consistently decreased
+* Validation loss showed fluctuations and increased at final epoch
+
+👉 Interpretation:
+
+* Model is fitting training data effectively
+* But struggling with generalization
+
+---
+
+## 🔍 Findings
+
+### ✅ Strengths
+
+* High training accuracy (**~93%**)
+* CNN successfully extracted important image features
+* Model is capable of distinguishing pneumonia vs normal cases
+
+---
+
+### ⚠️ Limitations (Overfitting)
+
+* Validation accuracy is lower than training accuracy
+* Validation loss is unstable
+
+👉 Conclusion:
+The model is **overfitting**, meaning it memorizes training data but does not generalize well to new data.
+
+---
+
+## 🚀 Future Improvements
+
+To improve performance:
+
+* Increase number of epochs with **Early Stopping**
+* Tune **Dropout rate**
+* Apply stronger **Data Augmentation**
+* Use **Transfer Learning** (e.g., VGG16, ResNet)
+* Balance dataset if class imbalance exists
+* Add **Batch Normalization**
+
+---
+
+## 🧪 Model Evaluation
+
+* Model tested using the **test dataset**
+* Final test accuracy printed in terminal
+* Performance is acceptable but can be improved
+
+---
+
+## 🛠️ Technologies Used
+
+* Python
+* TensorFlow / Keras
+* NumPy
+* Matplotlib
+* OpenCV
+* VS Code
+
+---
+
+## ▶️ How to Run the Project
+
+### Step 1: Open Project
+
+Open the project folder in **VS Code**
+
+### Step 2: Activate Virtual Environment
+
 ```
-tensorflow>=2.0
-keras
-numpy
-matplotlib
+venv\Scripts\activate
 ```
 
-Install dependencies:
-```bash
-pip install -r requirements.txt
+### Step 3: Install Dependencies
+
+```
+pip install tensorflow matplotlib numpy scikit-learn opencv-python
 ```
 
-## Usage
+### Step 4: Run the Model
 
-### Running the Model
-```bash
+```
 python main.py
 ```
 
-### Script Flow
-1. Loads and preprocesses training, validation, and test data
-2. Builds and compiles the CNN model
-3. Trains the model on training data with validation monitoring
-4. Displays accuracy and loss graphs
-5. Evaluates performance on test set
-6. Saves the trained model as `pneumonia_cnn_model.h5`
+---
 
-### Loading a Saved Model
-```python
-from tensorflow.keras.models import load_model
-model = load_model('pneumonia_cnn_model.h5')
+## 💾 Output
 
-# Make predictions
-predictions = model.predict(test_data)
+* 📊 Accuracy Graph
+* 📉 Loss Graph
+* 🧪 Test Accuracy (printed in terminal)
+* 💾 Saved Model file:
+
+```
+pneumonia_cnn_model.h5
 ```
 
-## Model Performance
-- Binary classification task (Normal vs Pneumonia)
-- Evaluated on test set accuracy metric
-- Output: Probability score (0 = Normal, 1 = Pneumonia)
+---
 
-## Files
-- `main.py`: Main training and evaluation script
-- `pneumonia_cnn_model.h5`: Trained model weights
-- `README.md`: Project documentation
-- `dataset/`: Training, validation, and test data folders
+## 📌 Conclusion
 
-## Author
-Minar Imtiaz
+This project demonstrates the effectiveness of **Convolutional Neural Networks (CNNs)** in medical image classification. While the model achieves strong performance on training data, improvements are needed to enhance generalization and reduce overfitting.
 
-## License
-This project is open source and available under the MIT License.
+This work provides a solid foundation for building more advanced AI-based healthcare diagnostic systems.
+
